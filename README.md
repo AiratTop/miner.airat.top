@@ -1,10 +1,12 @@
 # Minesweeper game
 
-[![miner.airat.top](https://raw.githubusercontent.com/AiratTop/miner.airat.top/main/screenshot.png)](https://miner.airat.top/)
+[![miner.airat.top](https://raw.githubusercontent.com/AiratTop/miner.airat.top/main/canvas.png)](https://miner.airat.top/)
 
 A small browser-based version of the classic Minesweeper game, featuring a modern UI, dark mode, and multiple difficulty levels.
 
 The game is published and available at: https://miner.airat.top
+
+[![miner.airat.top](https://raw.githubusercontent.com/AiratTop/miner.airat.top/main/screenshot.png)](https://miner.airat.top/)
 
 ## License
 
