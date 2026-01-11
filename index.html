@@ -218,6 +218,7 @@
         let timerInterval = null;
         let timeSeconds = 0;
         let firstClick = true;
+        let isPausedByVisibility = false;
 
         const gridElement = document.getElementById('grid');
         const minesDisplay = document.getElementById('mines-count');
@@ -243,7 +244,8 @@
         }
 
         function resetState() {
-            clearInterval(timerInterval);
+            stopTimer();
+            isPausedByVisibility = false;
             isGameOver = false;
             firstClick = true;
             timeSeconds = 0;
@@ -377,6 +379,7 @@
         }
 
         function startTimer() {
+            if (timerInterval !== null) return;
             timerInterval = setInterval(() => {
                 timeSeconds++;
                 const mins = String(Math.floor(timeSeconds / 60)).padStart(2, '0');
@@ -385,9 +388,30 @@
             }, 1000);
         }
 
+        function stopTimer() {
+            if (timerInterval === null) return;
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                if (!isGameOver && !firstClick && timerInterval !== null) {
+                    stopTimer();
+                    isPausedByVisibility = true;
+                }
+                return;
+            }
+
+            if (isPausedByVisibility && !isGameOver && !firstClick && timerInterval === null) {
+                startTimer();
+            }
+            isPausedByVisibility = false;
+        }
+
         function endGame(won) {
             isGameOver = true;
-            clearInterval(timerInterval);
+            stopTimer();
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     if (grid[r][c].isMine) {
@@ -411,6 +435,7 @@
         }
 
         function closeModal() { modal.style.display = 'none'; }
+        document.addEventListener('visibilitychange', handleVisibilityChange);
         restartBtn.addEventListener('click', initGame);
         difficultySelect.addEventListener('change', initGame);
         window.onload = initGame;
