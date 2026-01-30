@@ -41,6 +41,15 @@
     <style>
         :root {
             --cell-size: 30px;
+            --bg: #f2f6fb;
+            --bg-strong: #e7eef8;
+            --grid: rgba(12, 18, 35, 0.05);
+        }
+
+        .dark {
+            --bg: #0b111a;
+            --bg-strong: #0f1724;
+            --grid: rgba(255, 255, 255, 0.05);
         }
 
         body {
@@ -50,6 +59,13 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background:
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+                radial-gradient(900px 520px at 8% 6%, rgba(66, 149, 255, 0.25), transparent 60%),
+                radial-gradient(700px 520px at 92% 12%, rgba(28, 78, 160, 0.2), transparent 60%),
+                linear-gradient(160deg, var(--bg), var(--bg-strong));
+            background-size: 44px 44px, 44px 44px, auto, auto, auto;
         }
 
         .grid-container {
@@ -237,6 +253,24 @@
         const restartBtn = document.getElementById('restart-btn');
         const modal = document.getElementById('game-modal');
 
+        function updateCellSize() {
+            if (!cols) return;
+
+            const bodyStyles = window.getComputedStyle(document.body);
+            const paddingLeft = parseFloat(bodyStyles.paddingLeft) || 0;
+            const paddingRight = parseFloat(bodyStyles.paddingRight) || 0;
+            const available = window.innerWidth - paddingLeft - paddingRight;
+
+            const gap = 2;
+            const border = 4 * 2;
+            const maxSize = Math.floor((available - (cols - 1) * gap - border) / cols);
+            const minSize = cols > 16 ? 14 : 20;
+            const size = Math.max(minSize, Math.min(30, maxSize));
+
+            document.documentElement.style.setProperty('--cell-size', `${size}px`);
+            gridElement.style.gridTemplateColumns = `repeat(${cols}, var(--cell-size))`;
+        }
+
         // Global context menu disable for the board area
         gridElement.addEventListener('contextmenu', (e) => {
             e.preventDefault();
@@ -249,6 +283,7 @@
             rows = CONFIG[diff].rows;
             cols = CONFIG[diff].cols;
             minesCount = CONFIG[diff].mines;
+            updateCellSize();
             resetState();
             createGridUI();
         }
@@ -448,6 +483,7 @@
         document.addEventListener('visibilitychange', handleVisibilityChange);
         restartBtn.addEventListener('click', initGame);
         difficultySelect.addEventListener('change', initGame);
+        window.addEventListener('resize', updateCellSize);
         window.onload = initGame;
     </script>
 </body>
