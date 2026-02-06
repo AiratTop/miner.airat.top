@@ -377,6 +377,7 @@
                 for (let c = 0; c < cols; c++) {
                     if (grid[r][c].isMine) {
                         grid[r][c].element.classList.add('mine');
+                        if (won) grid[r][c].element.classList.add('mine-win');
                         grid[r][c].element.classList.remove('flagged');
                     }
                 }

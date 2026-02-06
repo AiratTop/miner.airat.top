@@ -62,6 +62,7 @@ body {
 .dark .cell.revealed { border: 1px solid #1e293b; background-color: #1e293b; }
 
 .cell.mine { background-color: #ef4444; border: 1px solid #b91c1c; }
+.cell.mine.mine-win { background-color: #22c55e; border: 1px solid #15803d; }
 .cell.flagged::after { content: '🚩'; font-size: 14px; }
 .cell.mine::after { content: '💣'; }
 
