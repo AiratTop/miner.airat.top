@@ -16,7 +16,7 @@ Public browser Minesweeper game (`miner.airat.top`).
 ## Site Conventions
 - Keep UI consistent with AiratTop tool ecosystem while preserving game-specific UX.
 - Keep SEO metadata and social tags in `index.html`.
-- Keep the Google Analytics counter and other required site-verification tags.
+- Keep the required site-verification tags. No analytics or other third-party tracking scripts: this tool handles what users type into it.
 - Publish static assets from `public_html`.
 
 ## AI Working Notes
