@@ -33,7 +33,7 @@ body {
     margin: 20px auto;
     width: max-content;
     border-radius: 4px;
-    /* Запрещаем выделение текста и вызов меню на уровне сетки */
+    /* Disable text selection and the long-press menu at the grid level */
     -webkit-touch-callout: none;
 }
 
